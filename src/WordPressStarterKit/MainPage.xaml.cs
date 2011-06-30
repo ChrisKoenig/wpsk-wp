@@ -8,6 +8,7 @@ using System.Windows.Controls;
 using System.Windows.Media.Imaging;
 using System.Xml.Linq;
 using Microsoft.Phone.Controls;
+using Microsoft.Phone.Net.NetworkInformation;
 using Microsoft.Phone.Tasks;
 using WordPressStarterKit.Models;
 
@@ -26,13 +27,23 @@ namespace WordPressStarterKit
         public MainPage()
         {
             InitializeComponent();
-            this.DataContext = this;
-            //search section -- progress bar control
-            performanceProgressBar.Visibility = Visibility.Collapsed;
-            //category section -- progress bar control
-            performanceProgressBar2.Visibility = Visibility.Collapsed;
-            //load recent post
-            ReadRss(new Uri(siteURL + "?feed=get_recent"));
+
+            if (!NetworkInterface.GetIsNetworkAvailable() || NetworkInterface.NetworkInterfaceType == NetworkInterfaceType.None)
+            {
+                MessageBox.Show("This application requires a network connection to function properly. Please fix your internet connection and re-launch the app.", "Network Error", MessageBoxButton.OK);
+                var app = App.Current as App;
+                app.ExitNow();
+            }
+            else
+            {
+                this.DataContext = this;
+                //search section -- progress bar control
+                performanceProgressBar.Visibility = Visibility.Collapsed;
+                //category section -- progress bar control
+                performanceProgressBar2.Visibility = Visibility.Collapsed;
+                //load recent post
+                ReadRss(new Uri(siteURL + "?feed=get_recent"));
+            }
         }
 
         public void ReadRss(Uri rssUri)

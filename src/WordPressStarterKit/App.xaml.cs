@@ -17,7 +17,7 @@ namespace WordPressStarterKit
 {
     public partial class App : Application
     {
-       // private static MainViewModel viewModel = null;
+        // private static MainViewModel viewModel = null;
 
         /// <summary>
         /// A static ViewModel used by the views to bind against.
@@ -34,7 +34,7 @@ namespace WordPressStarterKit
         /// </summary>
         public App()
         {
-            // Global handler for uncaught exceptions. 
+            // Global handler for uncaught exceptions.
             UnhandledException += Application_UnhandledException;
 
             // Show graphics profiling information while debugging.
@@ -46,7 +46,7 @@ namespace WordPressStarterKit
                 // Show the areas of the app that are being redrawn in each frame.
                 //Application.Current.Host.Settings.EnableRedrawRegions = true;
 
-                // Enable non-production analysis visualization mode, 
+                // Enable non-production analysis visualization mode,
                 // which shows areas of a page that are being GPU accelerated with a colored overlay.
                 //Application.Current.Host.Settings.EnableCacheVisualization = true;
             }
@@ -56,6 +56,12 @@ namespace WordPressStarterKit
 
             // Phone-specific initialization
             InitializePhoneApplication();
+        }
+
+        public void ExitNow()
+        {
+            // this will exit the application immediately
+            throw new Exception();
         }
 
         // Code to execute when the application is launching (eg, from Start)
@@ -69,7 +75,6 @@ namespace WordPressStarterKit
         private void Application_Activated(object sender, ActivatedEventArgs e)
         {
             // Ensure that application state is restored appropriately
-         
         }
 
         // Code to execute when the application is deactivated (sent to background)
@@ -139,6 +144,6 @@ namespace WordPressStarterKit
             RootFrame.Navigated -= CompleteInitializePhoneApplication;
         }
 
-        #endregion
+        #endregion Phone application initialization
     }
 }
